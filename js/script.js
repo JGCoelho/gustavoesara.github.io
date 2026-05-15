@@ -70,6 +70,10 @@ function abrirModal(presente) {
 
 }
 
+document
+    .getElementById("cancelar-modal")
+    .addEventListener("click", fecharModalPix)
+
 function fecharModalPix() {
 
   modal?.classList.add("hidden");
@@ -95,6 +99,7 @@ function mostrarPix() {
   document
     .getElementById("etapa-pix")
     .classList.remove("hidden")
+
 
   gerarPixDoPresente(presenteSelecionado)
 }
@@ -141,6 +146,11 @@ async function reservarPresente() {
 
   if (!nome) return;
 
+  // Gera payload PIX do presente
+  const payloadPix = gerarPixDoPresente(
+    presenteSelecionado
+  );
+
   const agora = new Date();
 
   const expira = new Date(
@@ -149,18 +159,17 @@ async function reservarPresente() {
   );
 
   const { data, error } = await supabaseClient
-  .from("presents")
-  .update({
-    status: "reserved",
-    reserved_at: agora.toISOString(),
-    expires_at: expira.toISOString(),
-    reserved_by: nome,
-    pix_code:payload
-  })
-  .eq("id", presenteSelecionado.id)
-  .eq("status", "available")
-  .select();
-
+    .from("presents")
+    .update({
+      status: "reserved",
+      reserved_at: agora.toISOString(),
+      expires_at: expira.toISOString(),
+      reserved_by: nome,
+      pix_code: payloadPix
+    })
+    .eq("id", presenteSelecionado.id)
+    .eq("status", "available")
+    .select();
 
   if (error) {
 
@@ -176,17 +185,17 @@ async function reservarPresente() {
 
   if (!data || data.length === 0) {
 
-  alert(
-    "Este presente acabou de ser reservado por outra pessoa."
-  );
+    alert(
+      "Este presente acabou de ser reservado por outra pessoa."
+    );
 
-  await carregarPresentes();
+    await carregarPresentes();
 
-  fecharModalPix();
+    fecharModalPix();
 
-  return;
+    return;
 
-}
+  }
 
   mostrarPix();
 
