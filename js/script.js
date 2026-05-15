@@ -88,10 +88,15 @@ function fecharModalPix() {
 
 function mostrarPix() {
 
-  etapaReserva?.classList.add("hidden");
+  document
+    .getElementById("etapa-reserva")
+    .classList.add("hidden")
 
-  etapaPix?.classList.remove("hidden");
+  document
+    .getElementById("etapa-pix")
+    .classList.remove("hidden")
 
+  gerarPixDoPresente(presenteSelecionado)
 }
 
 // ============================================================
@@ -149,7 +154,8 @@ async function reservarPresente() {
     status: "reserved",
     reserved_at: agora.toISOString(),
     expires_at: expira.toISOString(),
-    reserved_by: nome
+    reserved_by: nome,
+    pix_code:payload
   })
   .eq("id", presenteSelecionado.id)
   .eq("status", "available")
@@ -200,7 +206,8 @@ async function expirarReservas() {
       status: "available",
       reserved_at: null,
       reserved_by: null,
-      expires_at: null
+      expires_at: null,
+      pix_code:payload
     })
     .eq("status", "reserved")
     .lt(
@@ -213,6 +220,35 @@ async function expirarReservas() {
 // ============================================================
 // Carregar Presentes
 // ============================================================
+function gerarPixDoPresente(presente) {
+
+  const payload = gerarPayloadPix({
+    pixKey: "josegustavocoelho@gmail.com",
+    description: presente.name,
+    merchantName: "GUSTAVO E SARA",
+    merchantCity: "GOVVALADARES",
+    amount: Number(presente.price),
+    txid: `PRESENTE${presente.id}`
+  })
+
+  // Atualiza texto copia-e-cola
+  document.querySelector("#etapa-pix .break-all").textContent = payload
+
+  // Container QR
+  const qrContainer = document.getElementById("qrcode")
+
+  // Limpa QR anterior
+  qrContainer.innerHTML = ""
+
+  // Gera QR
+  new QRCode(qrContainer, {
+    text: payload,
+    width: 220,
+    height: 220
+  })
+
+  return payload
+}
 
 async function carregarPresentes() {
 
