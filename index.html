@@ -242,101 +242,107 @@
   </div>
 
   <!-- Modal PIX -->
+<div
+  id="modal-pix"
+  class="hidden fixed inset-0 z-50 flex items-center justify-center px-6"
+>
+
+  <!-- Overlay -->
   <div
-    id="modal-pix"
-    class="hidden fixed inset-0 z-50 flex items-center justify-center px-6"
-  >
+    id="overlay"
+    class="absolute inset-0 bg-black/40 backdrop-blur-sm"
+  ></div>
 
-    <!-- Overlay -->
-    <div
-      id="overlay"
-      class="absolute inset-0 bg-black/40 backdrop-blur-sm"
-    ></div>
+  <!-- Modal Card -->
+  <div class="modal-card relative">
 
-    <!-- Modal Card -->
-    <div class="modal-card relative">
+    <!-- Fechar -->
+    <button
+      id="fechar-modal"
+      class="absolute top-5 right-5 text-2xl text-[#7A7340] hover:opacity-60 transition"
+    >
+      ×
+    </button>
 
-      <!-- Fechar -->
-      <button
-        id="fechar-modal"
-        class="absolute top-5 right-5 text-2xl text-[#7A7340] hover:opacity-60 transition"
-      >
-  
-      </button>
+    <!-- ========================= -->
+    <!-- ETAPA 1 -->
+    <!-- ========================= -->
 
-      <!-- ========================= -->
-      <!-- ETAPA 1 -->
-      <!-- ========================= -->
+    <div id="etapa-reserva">
 
-      <div id="etapa-reserva">
+      <h2 class="text-4xl mb-6">
+        Reservar presente
+      </h2>
 
-        <h2 class="text-4xl mb-6">
-          Reservar presente
-        </h2>
+      <p class="text-[#7A7340] mb-8 leading-relaxed">
+        Ao reservar este presente, ele ficará indisponível para outras pessoas.
+      </p>
 
-        <p class="text-[#7A7340] mb-8 leading-relaxed">
-          Deseja reservar este presente por 48 horas antes do pagamento?
-        </p>
+      <div class="flex flex-col gap-4">
 
-        <div class="flex flex-col gap-4">
-
-          <button
-            id="reservar-presente"
-            class="w-full bg-[#6B6228] text-white py-4 rounded-xl hover:bg-[#5A5322] transition"
-          >
-            Reservar por 48h
-          </button>
-
-          <button
-            id="somente-pix"
-            class="w-full border border-[#6B6228] text-[#6B6228] py-4 rounded-xl hover:bg-[#F7F0E8] transition"
-          >
-            Apenas visualizar PIX
-          </button>
-
-        </div>
-
-      </div>
-
-      <!-- ========================= -->
-      <!-- ETAPA 2 -->
-      <!-- ========================= -->
-
-      <div id="etapa-pix" class="hidden">
-
-        <h2 class="text-4xl mb-6">
-          Presente PIX
-        </h2>
-
-        <p class="text-[#7A7340] mb-8 leading-relaxed">
-          Escaneie o QR Code abaixo ou copie nossa chave PIX.
-        </p>
-
-        <div class="bg-[#F7F0E8] rounded-2xl p-6 mb-8">
-          <img
-            src="images/qrcode-placeholder.png"
-            class="w-52 mx-auto"
-          >
-        </div>
-
-        <div class="bg-[#F7F0E8] rounded-2xl p-4 mb-6 break-all text-sm">
-          pix@gustavoesara.com
-        </div>
-
+        <!-- CANCELAR -->
         <button
-          id="copiar-pix"
+          id="cancelar-modal"
+          class="w-full bg-red-200 text-red-800 py-4 rounded-xl hover:bg-red-300 transition"
+        >
+          Cancelar
+        </button>
+
+        <!-- RESERVAR -->
+        <button
+          id="reservar-presente"
           class="w-full bg-[#6B6228] text-white py-4 rounded-xl hover:bg-[#5A5322] transition"
         >
-          Copiar chave PIX
+          Reservar presente
         </button>
 
       </div>
 
     </div>
 
+    <!-- ========================= -->
+    <!-- ETAPA 2 -->
+    <!-- ========================= -->
+
+    <div id="etapa-pix" class="hidden">
+
+      <h2 class="text-4xl mb-6">
+        Presente PIX
+      </h2>
+
+      <p class="text-[#7A7340] mb-8 leading-relaxed">
+        Escaneie o QR Code abaixo ou copie o código PIX.
+      </p>
+
+      <!-- QR CODE -->
+      <div class="bg-[#F7F0E8] rounded-2xl p-6 mb-8 flex justify-center">
+        <div id="qrcode"></div>
+      </div>
+
+      <!-- PIX COPIA E COLA -->
+      <div
+        id="pix-code"
+        class="bg-[#F7F0E8] rounded-2xl p-4 mb-6 break-all text-sm"
+      >
+      </div>
+
+      <!-- COPIAR -->
+      <button
+        id="copiar-pix"
+        class="w-full bg-[#6B6228] text-white py-4 rounded-xl hover:bg-[#5A5322] transition"
+      >
+        Copiar código PIX
+      </button>
+
+    </div>
+
   </div>
 
+</div>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="js/pix.js"></script>
   <script src="js/script.js"></script>
 
 </body>
