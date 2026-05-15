@@ -16,6 +16,7 @@
     rel="stylesheet"
   >
 
+  <link rel="icon" href="images/icon_flower.png" type="image/png">
   <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -247,13 +248,10 @@
 <div id="modal-pix" class="hidden fixed inset-0 z-50 flex items-center justify-center px-6 py-6 overflow-hidden">
 
   <!-- Overlay -->
-  <div
-    id="overlay"
-    class="absolute inset-0 bg-black/40 backdrop-blur-sm"
-  ></div>
+  <div id="overlay" class="absolute inset-0 bg-black/40 backdrop-blur-sm z-40 pointer-events-auto"></div>
 
   <!-- Modal Card -->
-  <div class="modal-card relative">
+  <div class="modal-card relative z-50">
 
     <!-- Fechar -->
     <button

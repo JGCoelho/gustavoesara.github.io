@@ -46,6 +46,7 @@ function escaparHTML(texto) {
 // ============================================================
 
 function abrirModal(presente) {
+  document.body.classList.add("overflow-hidden");
   presenteSelecionado = presente;
 
   modal?.classList.remove("hidden");
@@ -65,6 +66,7 @@ function abrirModal(presente) {
 }
 
 function fecharModalPix() {
+  document.body.classList.remove("overflow-hidden");
   modal?.classList.add("hidden");
   presenteSelecionado = null;
 
@@ -153,11 +155,21 @@ if (copiarPix) {
 // Reservar Presente (CORRIGIDO)
 // ============================================================
 
+let isReserving = false;
+
 async function reservarPresente() {
   if (!presenteSelecionado) return;
 
+  // 🔒 bloqueia múltiplos cliques
+  if (isReserving) return;
+  isReserving = true;
+
   const nome = prompt("Digite seu nome para reservar:");
-  if (!nome) return;
+
+  if (!nome) {
+    isReserving = false;
+    return;
+  }
 
   const payloadPix = gerarPixDoPresente(presenteSelecionado);
 
@@ -173,6 +185,7 @@ async function reservarPresente() {
   if (error) {
     console.error(error);
     alert("Erro ao reservar presente.");
+    isReserving = false;
     return;
   }
 
@@ -180,6 +193,7 @@ async function reservarPresente() {
     alert("Este presente acabou de ser reservado por outra pessoa.");
     await carregarPresentes();
     fecharModalPix();
+    isReserving = false;
     return;
   }
 
@@ -204,6 +218,9 @@ async function reservarPresente() {
   );
 
   await carregarPresentes();
+
+  // 🔓 libera novamente
+  isReserving = false;
 }
 
 // ============================================================
