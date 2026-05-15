@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Gustavo & Sara</title>
+  <title>Sara & Gustavo</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -114,7 +114,7 @@
         >
 
         <h1 class="text-5xl md:text-8xl mb-10 leading-[1.1]">
-          Gustavo & Sara
+          Sara & Gustavo
         </h1>
 
         <p class="text-lg md:text-2xl text-[#7A7340] mb-14 leading-relaxed max-w-3xl mx-auto">
@@ -208,9 +208,12 @@
               R$ 150
             </p>
 
-            <button class="w-full bg-[#6B6228] text-white py-4 rounded-xl hover:bg-[#5A5322] transition">
-              Presentear
-            </button>
+            <button
+            id="abrir-modal"
+            class="w-full bg-[#6B6228] text-white py-4 rounded-xl hover:bg-[#5A5322] transition"
+          >
+            Presentear
+          </button>
 
           </div>
 
@@ -250,9 +253,12 @@
               R$ 80
             </p>
 
-            <button class="w-full bg-[#6B6228] text-white py-4 rounded-xl hover:bg-[#5A5322] transition">
-              Presentear
-            </button>
+            <button
+            id="abrir-modal"
+            class="w-full bg-[#6B6228] text-white py-4 rounded-xl hover:bg-[#5A5322] transition"
+          >
+            Presentear
+          </button>
 
           </div>
 
@@ -287,5 +293,100 @@
 
   </div>
 
+  <!-- Modal PIX -->
+<div
+  id="modal-pix"
+  class="hidden fixed inset-0 z-50 flex items-center justify-center px-6"
+>
+
+  <!-- Fundo escuro -->
+  <div
+    id="overlay"
+    class="absolute inset-0 bg-black/40 backdrop-blur-sm"
+  ></div>
+
+  <!-- Card do modal -->
+  <div class="relative bg-[#FFFDF9] rounded-3xl max-w-md w-full p-10 shadow-2xl text-center animate-fade">
+
+    <!-- Botão fechar -->
+    <button
+      id="fechar-modal"
+      class="absolute top-5 right-5 text-2xl text-[#7A7340] hover:opacity-60 transition"
+    >
+      ×
+    </button>
+
+    <h2 class="text-4xl mb-6">
+      Presente PIX
+    </h2>
+
+    <p class="text-[#7A7340] mb-8 leading-relaxed">
+      Escaneie o QR Code abaixo ou copie nossa chave PIX.
+    </p>
+
+    <!-- QR Code fake -->
+    <div class="bg-[#F7F0E8] rounded-2xl p-6 mb-8">
+      <img
+        src="images/qrcode-placeholder.png"
+        class="w-52 mx-auto"
+      >
+    </div>
+
+    <!-- Chave PIX -->
+    <div class="bg-[#F7F0E8] rounded-2xl p-4 mb-6 break-all text-sm">
+      pix@gustavoesara.com
+    </div>
+
+    <!-- Botão copiar -->
+    <button
+      id="copiar-pix"
+      class="w-full bg-[#6B6228] text-white py-4 rounded-xl hover:bg-[#5A5322] transition"
+    >
+      Copiar chave PIX
+    </button>
+
+  </div>
+
+  </div>
+  <script>
+
+  // Elementos
+  const abrirBotoes = document.querySelectorAll("#abrir-modal");
+  const modal = document.getElementById("modal-pix");
+  const fecharModal = document.getElementById("fechar-modal");
+  const overlay = document.getElementById("overlay");
+  const copiarPix = document.getElementById("copiar-pix");
+
+  // Abrir modal
+  abrirBotoes.forEach(botao => {
+    botao.addEventListener("click", () => {
+      modal.classList.remove("hidden");
+    });
+  });
+
+  // Fechar modal
+  fecharModal.addEventListener("click", () => {
+    modal.classList.add("hidden");
+  });
+
+  // Fechar clicando fora
+  overlay.addEventListener("click", () => {
+    modal.classList.add("hidden");
+  });
+
+  // Copiar chave PIX
+  copiarPix.addEventListener("click", () => {
+
+    navigator.clipboard.writeText("pix@gustavoesara.com");
+
+    copiarPix.innerText = "Chave copiada ✓";
+
+    setTimeout(() => {
+      copiarPix.innerText = "Copiar chave PIX";
+    }, 2000);
+
+  });
+
+</script>
 </body>
 </html>
