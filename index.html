@@ -23,89 +23,108 @@
   </style>
 </head>
 
+<body class="bg-stone-100 text-stone-800 relative overflow-x-hidden">
 
+  <!-- Floral background -->
+  <img
+    src="images/floral-frame.png"
+    class="fixed inset-0 w-full h-full object-cover opacity-25 pointer-events-none"
+    style="z-index: 0;"
+  >
 
-<body class="bg-stone-100 text-stone-800">
+  <!-- Main content -->
+  <div class="relative z-10">
 
-  <section class="min-h-screen flex items-center justify-center px-6">
-    <div class="max-w-3xl text-center">
+    <section class="min-h-screen flex items-center justify-center px-6">
+      <div class="max-w-3xl text-center">
 
-      <p class="uppercase tracking-[0.3em] text-sm text-stone-500 mb-6">
-        Nosso Casamento
-      </p>
+        <p class="uppercase tracking-[0.3em] text-sm text-stone-500 mb-6">
+          Nosso Casamento
+        </p>
 
-      <h1 class="text-6xl md:text-7xl mb-6">
-        Gustavo & Sara
-      </h1>
+        <h1 class="text-6xl md:text-7xl mb-6">
+          Gustavo & Sara
+        </h1>
 
-      <p class="text-xl text-stone-600 mb-10 leading-relaxed">
-        Estamos muito felizes em celebrar este momento com vocês.
-        Criamos esta página para compartilhar informações do casamento
-        e nossa lista de presentes.
-      </p>
+        <p class="text-xl text-stone-600 mb-10 leading-relaxed">
+          Estamos muito felizes em celebrar este momento com vocês.
+          Criamos esta página para compartilhar informações do casamento
+          e nossa lista de presentes.
+        </p>
 
-      <a
-        href="#presentes"
-        class="bg-stone-800 text-white px-8 py-4 rounded-full text-lg hover:bg-stone-700 transition"
-      >
-        Ver lista de presentes
-      </a>
+        <a
+          href="#presentes"
+          class="bg-stone-800 text-white px-8 py-4 rounded-full text-lg hover:bg-stone-700 transition"
+        >
+          Ver lista de presentes
+        </a>
 
-    </div>
-  </section>
+      </div>
+    </section>
 
-  <section id="presentes" class="py-24 px-6 bg-white">
-    <div class="max-w-5xl mx-auto">
+    <section id="presentes" class="py-24 px-6 bg-white/80 backdrop-blur-sm">
+      <div class="max-w-5xl mx-auto">
 
-      <h2 class="text-4xl mb-12 text-center">
-        Lista de Presentes
-      </h2>
+        <h2 class="text-4xl mb-12 text-center">
+          Lista de Presentes
+        </h2>
 
-      <div class="grid md:grid-cols-3 gap-8">
+        <div class="grid md:grid-cols-3 gap-8">
 
-        <div class="bg-stone-100 rounded-3xl p-8 shadow-sm">
-          <h3 class="text-2xl mb-4">Jantar Romântico</h3>
-          <p class="mb-6 text-stone-600">
-            Ajude nosso primeiro jantar na lua de mel.
-          </p>
-          <p class="text-2xl font-semibold mb-6">
-            R$ 150
-          </p>
-          <button class="w-full bg-stone-800 text-white py-3 rounded-xl">
-            Presentear
-          </button>
-        </div>
+          <div class="bg-stone-100/90 rounded-3xl p-8 shadow-sm">
+            <h3 class="text-2xl mb-4">Jantar Romântico</h3>
 
-        <div class="bg-stone-100 rounded-3xl p-8 shadow-sm">
-          <h3 class="text-2xl mb-4">Passagens</h3>
-          <p class="mb-6 text-stone-600">
-            Contribuição para nossa viagem.
-          </p>
-          <p class="text-2xl font-semibold mb-6">
-            R$ 500
-          </p>
-          <button class="w-full bg-stone-800 text-white py-3 rounded-xl">
-            Presentear
-          </button>
-        </div>
+            <p class="mb-6 text-stone-600">
+              Ajude nosso primeiro jantar na lua de mel.
+            </p>
 
-        <div class="bg-stone-100 rounded-3xl p-8 shadow-sm">
-          <h3 class="text-2xl mb-4">Café da Manhã</h3>
-          <p class="mb-6 text-stone-600">
-            Um começo de dia especial.
-          </p>
-          <p class="text-2xl font-semibold mb-6">
-            R$ 80
-          </p>
-          <button class="w-full bg-stone-800 text-white py-3 rounded-xl">
-            Presentear
-          </button>
+            <p class="text-2xl font-semibold mb-6">
+              R$ 150
+            </p>
+
+            <button class="w-full bg-stone-800 text-white py-3 rounded-xl hover:bg-stone-700 transition">
+              Presentear
+            </button>
+          </div>
+
+          <div class="bg-stone-100/90 rounded-3xl p-8 shadow-sm">
+            <h3 class="text-2xl mb-4">Passagens</h3>
+
+            <p class="mb-6 text-stone-600">
+              Contribuição para nossa viagem.
+            </p>
+
+            <p class="text-2xl font-semibold mb-6">
+              R$ 500
+            </p>
+
+            <button class="w-full bg-stone-800 text-white py-3 rounded-xl hover:bg-stone-700 transition">
+              Presentear
+            </button>
+          </div>
+
+          <div class="bg-stone-100/90 rounded-3xl p-8 shadow-sm">
+            <h3 class="text-2xl mb-4">Café da Manhã</h3>
+
+            <p class="mb-6 text-stone-600">
+              Um começo de dia especial.
+            </p>
+
+            <p class="text-2xl font-semibold mb-6">
+              R$ 80
+            </p>
+
+            <button class="w-full bg-stone-800 text-white py-3 rounded-xl hover:bg-stone-700 transition">
+              Presentear
+            </button>
+          </div>
+
         </div>
 
       </div>
+    </section>
 
-    </div>
-  </section>
+  </div>
 
 </body>
 </html>
