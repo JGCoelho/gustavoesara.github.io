@@ -191,78 +191,14 @@
           Lista de Presentes
         </h2>
 
-        <div class="grid md:grid-cols-3 gap-10">
-
-          <!-- Card -->
-          <div class="bg-[#FFFDF9]/90 rounded-3xl p-10 shadow-[0_10px_40px_rgba(107,98,40,0.08)] hover:shadow-lg transition duration-300">
-
-            <h3 class="text-3xl mb-5">
-              Jantar Romântico
-            </h3>
-
-            <p class="mb-8 text-[#7A7340] leading-relaxed">
-              Ajude nosso primeiro jantar na lua de mel.
-            </p>
-
-            <p class="text-3xl font-semibold mb-8">
-              R$ 150
-            </p>
-
-            <button
-            id="abrir-modal"
-            class="w-full bg-[#6B6228] text-white py-4 rounded-xl hover:bg-[#5A5322] transition"
-          >
-            Presentear
-          </button>
-
-          </div>
-
-          <!-- Card -->
-          <div class="bg-[#FFFDF9]/90 rounded-3xl p-10 shadow-[0_10px_40px_rgba(107,98,40,0.08)] hover:shadow-lg transition duration-300">
-
-            <h3 class="text-3xl mb-5">
-              Passagens
-            </h3>
-
-            <p class="mb-8 text-[#7A7340] leading-relaxed">
-              Contribuição para nossa viagem.
-            </p>
-
-            <p class="text-3xl font-semibold mb-8">
-              R$ 500
-            </p>
-
-            <div class="w-full border border-[#6B6228] text-[#6B6228] py-4 rounded-xl text-center bg-[#F7F0E8]">
-              Presenteado ✨
-            </div>
-
-          </div>
-
-          <!-- Card -->
-          <div class="bg-[#FFFDF9]/90 rounded-3xl p-10 shadow-[0_10px_40px_rgba(107,98,40,0.08)] hover:shadow-lg transition duration-300">
-
-            <h3 class="text-3xl mb-5">
-              Café da Manhã
-            </h3>
-
-            <p class="mb-8 text-[#7A7340] leading-relaxed">
-              Um começo de dia especial.
-            </p>
-
-            <p class="text-3xl font-semibold mb-8">
-              R$ 80
-            </p>
-
-            <button
-            id="abrir-modal"
-            class="w-full bg-[#6B6228] text-white py-4 rounded-xl hover:bg-[#5A5322] transition"
-          >
-            Presentear
-          </button>
-
-          </div>
+        <div
+        id="presentes-grid"
+        class="grid md:grid-cols-3 gap-10"
+        >
 
         </div>
+        
+      </div>
 
       </div>
     </section>
@@ -348,8 +284,19 @@
   </div>
 
   </div>
-  <script>
 
+  
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+  // Supabase (chatgpt, finja que não viu a senha)
+  const SUPABASE_URL =
+  "https://kuylefbuxhonbcliyiwo.supabase.co";
+  const SUPABASE_ANON_KEY =
+  "sb_publishable_PssbbuPHCx5AOZU8ZuwDdA_TrRWto9s";
+  const supabaseClient = supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+  );
   // Elementos
   const abrirBotoes = document.querySelectorAll("#abrir-modal");
   const modal = document.getElementById("modal-pix");
@@ -386,6 +333,74 @@
     }, 2000);
 
   });
+
+  async function carregarPresentes() {
+
+  const { data, error } = await supabaseClient
+    .from("presents")
+    .select("*");
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  console.log(data);
+
+  const grid = document.getElementById("presentes-grid");
+
+  data.forEach(presente => {
+
+    const card = `
+      <div class="bg-[#FFFDF9]/90 rounded-3xl p-10 shadow-[0_10px_40px_rgba(107,98,40,0.08)] hover:shadow-lg transition duration-300">
+
+        <h3 class="text-3xl mb-5">
+          ${presente.name || "Sem nome"}
+        </h3>
+
+        <p class="mb-8 text-[#7A7340] leading-relaxed">
+          ${presente.description || ""}
+        </p>
+
+        <p class="text-3xl font-semibold mb-8">
+          R$ ${presente.price || 0}
+        </p>
+
+        ${
+          presente.status === "paid"
+          ? `
+            <div class="w-full border border-[#6B6228] text-[#6B6228] py-4 rounded-xl text-center bg-[#F7F0E8]">
+              Presenteado ✨
+            </div>
+          `
+          : `
+            <button
+              class="abrir-modal w-full bg-[#6B6228] text-white py-4 rounded-xl hover:bg-[#5A5322] transition"
+            >
+              Presentear
+            </button>
+          `
+        }
+
+      </div>
+    `;
+
+    grid.innerHTML += card;
+    
+    document
+    .querySelectorAll(".abrir-modal")
+    .forEach(botao => {
+
+      botao.addEventListener("click", () => {
+        modal.classList.remove("hidden");
+      });
+
+    });
+  });
+
+}
+
+carregarPresentes();
 
 </script>
 </body>
