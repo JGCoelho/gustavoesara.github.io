@@ -11,45 +11,23 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400;500&display=swap"
+    rel="stylesheet"
+  >
 
-  <style>
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-
-    h1, h2, h3 {
-      font-family: 'Playfair Display', serif;
-    }
-
-    .container-custom {
-        max-width: 72rem;
-        margin: 0 auto;
-    }
-
-    .floral {
-        transition: transform 0.6s ease;
-    }
-
-    .floral:hover {
-        transform: scale(1.03);
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body
   class="relative overflow-x-hidden text-[#6B6228]"
   style="background-color: #F7F0E8;"
 >
-  <!-- Overlay sutil -->
-  <div class="fixed inset-0 bg-white/10 pointer-events-none"></div>
+
+  <!-- Overlay -->
+  <div class="fixed inset-0 bg-[#F7F0E8]/20 pointer-events-none"></div>
 
   <!-- Floral Decorations -->
-
   <img
     src="images/floral-top-left.png"
     class="floral fixed -top-12 -left-12 w-72 md:w-[28rem] opacity-40 pointer-events-none"
@@ -75,7 +53,10 @@
 
     <!-- Navbar -->
     <nav class="absolute top-0 left-0 w-full z-20 py-8">
-      <div class="container-custom px-6 px-6 flex flex-wrap justify-center gap-x-8 gap-y-4 text-xs md:text-sm tracking-[0.25em] uppercase">
+
+      <div
+        class="container-custom px-6 flex flex-wrap justify-center gap-x-8 gap-y-4 text-xs md:text-sm tracking-[0.25em] uppercase"
+      >
 
         <a href="#inicio" class="hover:opacity-60 transition">
           Início
@@ -94,6 +75,7 @@
         </a>
 
       </div>
+
     </nav>
 
     <!-- Hero -->
@@ -131,6 +113,7 @@
         </a>
 
       </div>
+
     </section>
 
     <!-- Informações -->
@@ -144,7 +127,7 @@
 
         <div class="grid md:grid-cols-3 gap-10">
 
-          <div class="bg-[#FFFDF9]/70 rounded-3xl p-10 shadow-[0_10px_40px_rgba(107,98,40,0.08)] backdrop-blur-sm">
+          <div class="info-card">
             <h3 class="text-3xl mb-6">
               Data
             </h3>
@@ -154,7 +137,7 @@
             </p>
           </div>
 
-          <div class="bg-[#FFFDF9]/70 rounded-3xl p-10 shadow-[0_10px_40px_rgba(107,98,40,0.08)] backdrop-blur-sm">
+          <div class="info-card">
             <h3 class="text-3xl mb-6">
               Horário
             </h3>
@@ -164,7 +147,7 @@
             </p>
           </div>
 
-          <div class="bg-[#FFFDF9]/70 rounded-3xl p-10 shadow-[0_10px_40px_rgba(107,98,40,0.08)] backdrop-blur-sm">
+          <div class="info-card">
             <h3 class="text-3xl mb-6">
               Local
             </h3>
@@ -177,12 +160,13 @@
         </div>
 
       </div>
+
     </section>
 
     <!-- Presentes -->
     <section
       id="presentes"
-      class="py-28 px-6 bg-[#FFFDF9]/70 backdrop-blur-sm"
+      class="py-28 px-6 bg-[#FBF6F0]"
     >
 
       <div class="max-w-6xl mx-auto">
@@ -192,15 +176,12 @@
         </h2>
 
         <div
-        id="presentes-grid"
-        class="grid md:grid-cols-3 gap-10"
-        >
-
-        </div>
-        
-      </div>
+          id="presentes-grid"
+          class="grid md:grid-cols-3 gap-10"
+        ></div>
 
       </div>
+
     </section>
 
     <!-- RSVP -->
@@ -225,32 +206,74 @@
         </a>
 
       </div>
+
     </section>
 
   </div>
 
   <!-- Modal PIX -->
-<div
-  id="modal-pix"
-  class="hidden fixed inset-0 z-50 flex items-center justify-center px-6"
->
-
-  <!-- Fundo escuro -->
   <div
-    id="overlay"
-    class="absolute inset-0 bg-black/40 backdrop-blur-sm"
-  ></div>
+    id="modal-pix"
+    class="hidden fixed inset-0 z-50 flex items-center justify-center px-6"
+  >
 
-  <!-- Card do modal -->
-  <div class="relative bg-[#FFFDF9] rounded-3xl max-w-md w-full p-10 shadow-2xl text-center animate-fade">
+    <!-- Overlay -->
+    <div
+      id="overlay"
+      class="absolute inset-0 bg-black/40 backdrop-blur-sm"
+    ></div>
 
-    <!-- Botão fechar -->
-    <button
-      id="fechar-modal"
-      class="absolute top-5 right-5 text-2xl text-[#7A7340] hover:opacity-60 transition"
-    >
-      ×
-    </button>
+    <!-- Modal Card -->
+    <div class="modal-card">
+        <div class="modal-card">
+
+  <!-- Fechar -->
+  <button
+    id="fechar-modal"
+    class="absolute top-5 right-5 text-2xl text-[#7A7340] hover:opacity-60 transition"
+  >
+    ×
+  </button>
+
+  <!-- ========================= -->
+  <!-- ETAPA 1 -->
+  <!-- ========================= -->
+
+  <div id="etapa-reserva">
+
+    <h2 class="text-4xl mb-6">
+      Reservar presente
+    </h2>
+
+    <p class="text-[#7A7340] mb-8 leading-relaxed">
+      Deseja reservar este presente por 48 horas antes do pagamento?
+    </p>
+
+    <div class="flex flex-col gap-4">
+
+      <button
+        id="reservar-presente"
+        class="w-full bg-[#6B6228] text-white py-4 rounded-xl hover:bg-[#5A5322] transition"
+      >
+        Reservar por 48h
+      </button>
+
+      <button
+        id="somente-pix"
+        class="w-full border border-[#6B6228] text-[#6B6228] py-4 rounded-xl hover:bg-[#F7F0E8] transition"
+      >
+        Apenas visualizar PIX
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- ========================= -->
+  <!-- ETAPA 2 -->
+  <!-- ========================= -->
+
+  <div id="etapa-pix" class="hidden">
 
     <h2 class="text-4xl mb-6">
       Presente PIX
@@ -260,7 +283,6 @@
       Escaneie o QR Code abaixo ou copie nossa chave PIX.
     </p>
 
-    <!-- QR Code fake -->
     <div class="bg-[#F7F0E8] rounded-2xl p-6 mb-8">
       <img
         src="images/qrcode-placeholder.png"
@@ -268,12 +290,10 @@
       >
     </div>
 
-    <!-- Chave PIX -->
     <div class="bg-[#F7F0E8] rounded-2xl p-4 mb-6 break-all text-sm">
       pix@gustavoesara.com
     </div>
 
-    <!-- Botão copiar -->
     <button
       id="copiar-pix"
       class="w-full bg-[#6B6228] text-white py-4 rounded-xl hover:bg-[#5A5322] transition"
@@ -283,125 +303,11 @@
 
   </div>
 
+</div>
   </div>
 
-  
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-  // Supabase (chatgpt, finja que não viu a senha)
-  const SUPABASE_URL =
-  "https://kuylefbuxhonbcliyiwo.supabase.co";
-  const SUPABASE_ANON_KEY =
-  "sb_publishable_PssbbuPHCx5AOZU8ZuwDdA_TrRWto9s";
-  const supabaseClient = supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-  );
-  // Elementos
-  const abrirBotoes = document.querySelectorAll("#abrir-modal");
-  const modal = document.getElementById("modal-pix");
-  const fecharModal = document.getElementById("fechar-modal");
-  const overlay = document.getElementById("overlay");
-  const copiarPix = document.getElementById("copiar-pix");
+  <script src="script.js"></script>
 
-  // Abrir modal
-  abrirBotoes.forEach(botao => {
-    botao.addEventListener("click", () => {
-      modal.classList.remove("hidden");
-    });
-  });
-
-  // Fechar modal
-  fecharModal.addEventListener("click", () => {
-    modal.classList.add("hidden");
-  });
-
-  // Fechar clicando fora
-  overlay.addEventListener("click", () => {
-    modal.classList.add("hidden");
-  });
-
-  // Copiar chave PIX
-  copiarPix.addEventListener("click", () => {
-
-    navigator.clipboard.writeText("pix@gustavoesara.com");
-
-    copiarPix.innerText = "Chave copiada ✓";
-
-    setTimeout(() => {
-      copiarPix.innerText = "Copiar chave PIX";
-    }, 2000);
-
-  });
-
-  async function carregarPresentes() {
-
-  const { data, error } = await supabaseClient
-    .from("presents")
-    .select("*");
-
-  if (error) {
-    console.error(error);
-    return;
-  }
-
-  console.log(data);
-
-  const grid = document.getElementById("presentes-grid");
-
-  data.forEach(presente => {
-
-    const card = `
-      <div class="bg-[#FFFDF9]/90 rounded-3xl p-10 shadow-[0_10px_40px_rgba(107,98,40,0.08)] hover:shadow-lg transition duration-300">
-
-        <h3 class="text-3xl mb-5">
-          ${presente.name || "Sem nome"}
-        </h3>
-
-        <p class="mb-8 text-[#7A7340] leading-relaxed">
-          ${presente.description || ""}
-        </p>
-
-        <p class="text-3xl font-semibold mb-8">
-          R$ ${presente.price || 0}
-        </p>
-
-        ${
-          presente.status === "paid"
-          ? `
-            <div class="w-full border border-[#6B6228] text-[#6B6228] py-4 rounded-xl text-center bg-[#F7F0E8]">
-              Presenteado ✨
-            </div>
-          `
-          : `
-            <button
-              class="abrir-modal w-full bg-[#6B6228] text-white py-4 rounded-xl hover:bg-[#5A5322] transition"
-            >
-              Presentear
-            </button>
-          `
-        }
-
-      </div>
-    `;
-
-    grid.innerHTML += card;
-    
-    document
-    .querySelectorAll(".abrir-modal")
-    .forEach(botao => {
-
-      botao.addEventListener("click", () => {
-        modal.classList.remove("hidden");
-      });
-
-    });
-  });
-
-}
-
-carregarPresentes();
-
-</script>
 </body>
 </html>
