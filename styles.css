@@ -6,6 +6,10 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
+.texto-negrito {
+    font-weight: bold;
+}
+
 h1,
 h2,
 h3 {
@@ -49,3 +53,4 @@ h3 {
   text-align: center;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
 }
+

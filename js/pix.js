@@ -138,23 +138,23 @@ function mostrarPix() {
 // EXEMPLO
 // ======================================================
 
-const payload = gerarPayloadPix({
-  pixKey: "josegustavocoelho@gmail.com",
-  description: "Air Fryer",
-  merchantName: "GUSTAVO E SARA",
-  merchantCity: "GOVVALADARES",
-  amount: 150.00,
-  txid: "PRESENTE001"
-})
+// const payload = gerarPayloadPix({
+//   pixKey: "josegustavocoelho@gmail.com",
+//   description: "Air Fryer",
+//   merchantName: "GUSTAVO E SARA",
+//   merchantCity: "GOVVALADARES",
+//   amount: 150.00,
+//   txid: "PRESENTE001"
+// })
 
-console.log(payload)
+// console.log(payload)
 
 // ======================================================
 // QR CODE
 // ======================================================
 
-new QRCode(document.getElementById("qrcode"), {
-  text: payload,
-  width: 220,
-  height: 220
-})
+// new QRCode(document.getElementById("qrcode"), {
+//   text: payload,
+//   width: 220,
+//   height: 220
+// })

@@ -41,6 +41,15 @@ function escaparHTML(texto) {
   return div.innerHTML;
 }
 
+function formatarPreco(valor) {
+  const numero = Number(valor);
+
+  return numero.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL"
+  });
+}
+
 // ============================================================
 // Nome PIX (NOVO - CENTRALIZADO)
 // ============================================================
@@ -325,17 +334,17 @@ async function carregarPresentes() {
       </p>
 
       <p class="text-2xl font-semibold mb-5">
-        R$ ${presente.price || 0}
+        ${formatarPreco(presente.price || 0)}
       </p>
 
       ${
         presente.status === "reserved"
           ? `
-            <p class="text-sm text-[#7A7340] mb-5">
+            <p class="text-sm text-[#7A7340] mb-5 texto-negrito">
               Presente reservado por
-              <span class="font-medium">
+              <b><span class="font-big text-red-800" >
                 ${escaparHTML(presente.reserved_by || "")}
-              </span>
+              </span></b>
             </p>
           `
           : ""
@@ -344,8 +353,11 @@ async function carregarPresentes() {
       ${
         presente.status === "paid"
           ? `
-            <div class="w-full border border-[#6B6228] text-[#6B6228] py-3 rounded-xl text-center bg-[#F7F0E8] text-sm">
-              Presenteado ✨
+            <div class="w-full border border-[#6B6228] text-[#6B6228] py-3 rounded-xl text-center bg-[#F7F0E8] text-sm texto-negrito">
+              Presenteado por
+              <span class="texto-negrito">
+                ${escaparHTML(presente.reserved_by || "")}
+              </span>
             </div>
           `
           : `
