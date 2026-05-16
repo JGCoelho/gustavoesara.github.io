@@ -42,6 +42,17 @@ function escaparHTML(texto) {
 }
 
 // ============================================================
+// Nome PIX (NOVO - CENTRALIZADO)
+// ============================================================
+
+function atualizarNomePix(presente) {
+  const el = document.getElementById("pix-nome");
+  if (!el) return;
+
+  el.textContent = pixAberto?.name || "";
+}
+
+// ============================================================
 // Modal
 // ============================================================
 
@@ -68,7 +79,9 @@ function abrirModal(presente) {
 function fecharModalPix() {
   document.body.classList.remove("overflow-hidden");
   modal?.classList.add("hidden");
+
   presenteSelecionado = null;
+  pixAberto = null; // 🔥 importante
 
   etapaReserva?.classList.remove("hidden");
   etapaPix?.classList.add("hidden");
@@ -111,10 +124,18 @@ function mostrarPix() {
   etapaReserva?.classList.add("hidden");
   etapaPix?.classList.remove("hidden");
 
-  gerarPixDoPresente(presenteSelecionado);
+  pixAberto = presenteSelecionado; // 🔥 fixa snapshot correto
+
+  requestAnimationFrame(() => {
+    atualizarNomePix(pixAberto);
+  });
+
+  gerarPixDoPresente(pixAberto);
 }
 
 function mostrarPixSalvo(presente) {
+  pixAberto = presente; // 🔥 fixa o contexto correto
+
   const payload = presente.pix_code;
   if (!payload) return;
 
@@ -152,7 +173,7 @@ if (copiarPix) {
 }
 
 // ============================================================
-// Reservar Presente (CORRIGIDO)
+// Reservar Presente
 // ============================================================
 
 let isReserving = false;
@@ -160,7 +181,6 @@ let isReserving = false;
 async function reservarPresente() {
   if (!presenteSelecionado) return;
 
-  // 🔒 bloqueia múltiplos cliques
   if (isReserving) return;
   isReserving = true;
 
@@ -171,14 +191,15 @@ async function reservarPresente() {
     return;
   }
 
-  const payloadPix = gerarPixDoPresente(presenteSelecionado);
-
+  // ========================================================
+  // 1. RESERVA PRIMEIRO (SEM PIX)
+  // ========================================================
   const { data, error } = await supabaseClient.rpc(
     "reserve_present",
     {
       present_id: presenteSelecionado.id,
       reserver_name: nome,
-      pix: payloadPix
+      pix: null // 🔥 não geramos mais aqui
     }
   );
 
@@ -197,15 +218,20 @@ async function reservarPresente() {
     return;
   }
 
+  // ========================================================
+  // 2. ATUALIZA ESTADO COM DADOS REAIS DO BANCO
+  // ========================================================
   const presenteAtualizado = data[0];
-
-  // atualiza estado local
   presenteSelecionado = presenteAtualizado;
 
-  // mostra PIX UMA vez
+  // ========================================================
+  // 3. GERA PIX SOMENTE APÓS SUCESSO
+  // ========================================================
   mostrarPix();
 
-  // email (não bloqueia UI)
+  // ========================================================
+  // 4. EMAIL (continua igual)
+  // ========================================================
   supabaseClient.functions.invoke(
     "send-reservation-email",
     {
@@ -219,7 +245,6 @@ async function reservarPresente() {
 
   await carregarPresentes();
 
-  // 🔓 libera novamente
   isReserving = false;
 }
 
@@ -262,88 +287,99 @@ async function carregarPresentes() {
   if (!grid) return;
 
   const cards = data.map((presente) => {
-  return `
-    <div class="bg-[#FFFDF9]/90 rounded-3xl shadow-[0_10px_40px_rgba(107,98,40,0.08)] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+    return `
+  <div class="relative bg-[#FFFDF9]/90 rounded-3xl shadow-[0_10px_40px_rgba(107,98,40,0.08)] hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+
+    ${
+      presente.status === "paid"
+        ? `
+         <img
+          src="images/pago-stamp.png"
+          class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2/3 h-2/3 object-contain z-20 pointer-events-none"
+        />
+        `
+        : ""
+    }
+
+    ${
+      presente.image_url
+        ? `
+          <div class="w-full aspect-[2/1] overflow-hidden">
+            <img
+              src="${presente.image_url}"
+              class="w-full h-full object-cover block transition-transform duration-500 hover:scale-105"
+            />
+          </div>
+        `
+        : ""
+    }
+
+    <div class="relative z-10 p-8 pt-6">
+
+      <h3 class="text-3xl mb-4">
+        ${presente.name || "Sem nome"}
+      </h3>
+
+      <p class="mb-6 text-[#7A7340] leading-relaxed text-sm">
+        ${presente.description || ""}
+      </p>
+
+      <p class="text-2xl font-semibold mb-5">
+        R$ ${presente.price || 0}
+      </p>
 
       ${
-        presente.image_url
+        presente.status === "reserved"
           ? `
-            <div class="w-full aspect-[2/1] overflow-hidden">
-              <img
-                src="${presente.image_url}"
-                class="w-full h-full object-cover block transition-transform duration-500 hover:scale-105"
-              />
-            </div>
+            <p class="text-sm text-[#7A7340] mb-5">
+              Presente reservado por
+              <span class="font-medium">
+                ${escaparHTML(presente.reserved_by || "")}
+              </span>
+            </p>
           `
           : ""
       }
 
-      <div class="p-8 pt-6">
+      ${
+        presente.status === "paid"
+          ? `
+            <div class="w-full border border-[#6B6228] text-[#6B6228] py-3 rounded-xl text-center bg-[#F7F0E8] text-sm">
+              Presenteado ✨
+            </div>
+          `
+          : `
+            <button
+              class="abrir-modal w-full ${
+                presente.status === "reserved"
+                  ? "bg-yellow-700 hover:bg-yellow-800"
+                  : "bg-[#6B6228] hover:bg-[#5A5322]"
+              } text-white py-3 rounded-xl transition text-sm"
+              data-id="${presente.id}"
+            >
+              ${
+                presente.status === "reserved"
+                  ? "Ver PIX"
+                  : "Presentear"
+              }
+            </button>
+          `
+      }
 
-        <h3 class="text-3xl mb-4">
-          ${presente.name || "Sem nome"}
-        </h3>
-
-        <p class="mb-6 text-[#7A7340] leading-relaxed text-sm">
-          ${presente.description || ""}
-        </p>
-
-        <p class="text-2xl font-semibold mb-5">
-          R$ ${presente.price || 0}
-        </p>
-
-        ${
-          presente.status === "reserved"
-            ? `
-              <p class="text-sm text-[#7A7340] mb-5">
-                Presente reservado por
-                <span class="font-medium">
-                  ${escaparHTML(presente.reserved_by || "")}
-                </span>
-              </p>
-            `
-            : ""
-        }
-
-        ${
-          presente.status === "paid"
-            ? `
-              <div class="w-full border border-[#6B6228] text-[#6B6228] py-3 rounded-xl text-center bg-[#F7F0E8] text-sm">
-                Presenteado ✨
-              </div>
-            `
-            : `
-              <button
-                class="abrir-modal w-full ${
-                  presente.status === "reserved"
-                    ? "bg-yellow-700 hover:bg-yellow-800"
-                    : "bg-[#6B6228] hover:bg-[#5A5322]"
-                } text-white py-3 rounded-xl transition text-sm"
-                data-id="${presente.id}"
-              >
-                ${
-                  presente.status === "reserved"
-                    ? "Ver PIX"
-                    : "Presentear"
-                }
-              </button>
-            `
-        }
-
-      </div>
     </div>
+  </div>
   `;
-}).join("");
+  }).join("");
 
-grid.innerHTML = cards;
+  grid.innerHTML = cards;
 
-document.querySelectorAll(".abrir-modal").forEach((botao) => {
-  botao.addEventListener("click", () => {
-    const id = botao.dataset.id;
-    const presente = data.find((p) => p.id == id);
-    abrirModal(presente);
+  document.querySelectorAll(".abrir-modal").forEach((botao) => {
+    botao.addEventListener("click", () => {
+      const id = botao.dataset.id;
+      const presente = data.find((p) => p.id == id);
+      abrirModal(presente);
+    });
   });
-});
 }
 
 // ============================================================
